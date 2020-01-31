@@ -9,7 +9,7 @@ import android.util.Log;
 
 @Database(entities = {TaskEntry.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
-public abstract class AppDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase  {
 
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
@@ -25,7 +25,6 @@ public abstract class AppDatabase extends RoomDatabase {
                         // TODO (1) Disable queries on main thread
                         // Queries should be done in a separate thread to avoid locking the UI
                         // We will allow this ONLY TEMPORALLY to see that our DB is working
-                        .allowMainThreadQueries()
                         .build();
             }
         }

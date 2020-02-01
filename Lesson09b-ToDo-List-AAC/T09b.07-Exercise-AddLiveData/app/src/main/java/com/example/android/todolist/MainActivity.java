@@ -1,18 +1,18 @@
 /*
-* Copyright (C) 2016 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.example.android.todolist;
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
                         List<TaskEntry> tasks = mAdapter.getTasks();
                         mDb.taskDao().deleteTask(tasks.get(position));
                         // TODO (6) Remove the call to retrieveTasks
-                      //  retrieveTasks();
+                        //  retrieveTasks();
                     }
                 });
             }
@@ -124,24 +124,21 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
 //        super.onResume();
 //        retrieveTasks();
 //    }
-
     private void retrieveTasks() {
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                // TODO (4) Extract all this logic outside the Executor and remove the Executor
-                Log.d(TAG, "Actively retrieving the tasks from the DataBase");
-                // TODO (3) Fix compile issue by wrapping the return type with LiveData
-                 LiveData<List<TaskEntry>> tasks = mDb.taskDao().loadAllTasks();
-                // TODO (5) Observe tasks and move the logic from runOnUiThread to onChanged
-                // We will be able to simplify this once we learn more
-                // about Android Architecture Components
-               tasks.observe(MainActivity.this,(taskEntries)->{
-                    Log.d(TAG,"Receiving database update frome LiveData");
-                    mAdapter.setTasks(taskEntries);
-               });
-            }
+
+        // TODO (4) Extract all this logic outside the Executor and remove the Executor
+        Log.d(TAG, "Actively retrieving the tasks from the DataBase");
+        // TODO (3) Fix compile issue by wrapping the return type with LiveData
+        LiveData<List<TaskEntry>> tasks = mDb.taskDao().loadAllTasks();
+        // TODO (5) Observe tasks and move the logic from runOnUiThread to onChanged
+        // We will be able to simplify this once we learn more
+        // about Android Architecture Components
+        tasks.observe(MainActivity.this, (taskEntries) -> {
+            Log.d(TAG, "Receiving database update frome LiveData");
+            mAdapter.setTasks(taskEntries);
         });
+
+
     }
 
     @Override
